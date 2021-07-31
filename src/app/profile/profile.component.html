@@ -1,0 +1,21 @@
+<div id="profileCard">
+  <p id="proName">Hi, {{userName}}</p>
+  <div id="proDet">
+    <div class="form-group">
+      <label for="usr" class="text-info">City:</label>
+      <input type="text" class="form-control input-sm" id="usr" [value]="city" (input)="onCityChange($event)">
+    </div>
+    <div class="form-group">
+      <label for="pwd" class="text-info">Country:</label>
+      <input type="text" class="form-control input-sm" id="pwd" [(ngModel)]="country">
+    </div>
+    <button type="button" class="btn btn-primary btn-xs btn-block" (click)="saveData()">Save</button>
+    <button type="button" class="btn btn-danger btn-xs btn-block" (click)="deleteData()">Delete</button>
+  </div>
+</div>
+<p>The complete Address is : <span class="text-muted">{{getCompleteAddress()}}</span></p>
+<p class="text-info">Message: {{buttonMessage}}</p>
+<h1 style="color: red">Root val: {{profValfromRoot}}</h1>
+<button class="btn-default btn-sm" (click)="showProfiles()">Show Profiles</button>
+<button class="btn-default btn-sm" (click)="changeName(1)">Change Profiles</button>
+

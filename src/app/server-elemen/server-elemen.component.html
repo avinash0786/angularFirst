@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+  <div class="panel-heading">{{element.name}} type: [{{element.type}}]</div>
+  <div class="panel-body">
+    <p>
+      <strong *ngIf="element.type==='server'" style="color: red">{{element.content}}</strong>
+      <strong *ngIf="element.type==='blueprint'" >{{element.content}}</strong>
+    </p>
+  </div>
+  <hr>
+  <button class="btn-default btn-sm" (click)="showProfiles()">Show Profiles: Serv</button>
+  <button class="btn-default btn-sm" (click)="changeName(2)">Change Profiles: Serv</button>
+
+</div>
