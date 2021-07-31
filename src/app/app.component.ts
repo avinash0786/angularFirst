@@ -15,7 +15,7 @@ export class AppComponent {
   }
   yourName = 'Avinash Kumar';
   title="";
-  rootValue="My root value from app component";
+  rootValue="My ROOT value from app component";
   serverElements=[
     {
       type:'server',
