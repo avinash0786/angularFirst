@@ -1,5 +1,7 @@
 import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import {ProfileDataService} from "../services/profile-data.service";
+import {DataService} from "../services/data.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -10,15 +12,52 @@ import {ProfileDataService} from "../services/profile-data.service";
   providers:[]
 })
 export class ProfileComponent implements OnInit,OnChanges {
-
-  constructor(private profileService:ProfileDataService) {
+  constructor(private dataService:DataService, private profileService:ProfileDataService,private router:Router) {
     this.profileService.dataChange.subscribe((info:string)=>{
       alert('SUBS: dataChange: '+info)
     })
+
+    if (this.dataService.isLogged){
+      //if not logged then rediret to login
+      // this.router.navigate(['/login'])
+    }
+    else {
+      //get profile data
+      this.dataService.loadProfile()
+        .subscribe({
+          next: (data: any) => {
+            console.log("data recieved Profile")
+            console.log(data.body);
+            this.firstName = data.body.fname;
+            this.lastName = data.body.lname;
+            this.email = data.body.email;
+            this.userName = data.body.userName;
+            this.showMessage=false;
+          },
+          error: err => {
+            console.log(err)
+            console.log('error occured in Profile User')
+          }
+        })
+    }
   }
 
   ngOnInit(): void {
   }
+  //---------Code for assignments------------------
+  showMessage:boolean=true;
+  editProfile:boolean=false;
+  processingUsername:boolean=false;
+  userNameOK:boolean=true;
+  disbleRegister:boolean=!this.userNameOK && !this.processingUsername;
+
+  firstName:string="";
+  lastName:string="";
+  userName:string="";
+  password:string="";
+  email:string="";
+  //---------Code for assignments------------------
+
 
   ngOnChanges(changes:SimpleChanges){
     console.log(changes)
@@ -26,7 +65,7 @@ export class ProfileComponent implements OnInit,OnChanges {
   @Input()
   profValfromRoot!:string;
 
-  userName:string="Avinash Kumar";
+  userName1:string="Avinash Kumar";
   city:string="Chandigarh";
   country="India,[IN]";
   buttonMessage="";
@@ -57,3 +96,12 @@ export class ProfileComponent implements OnInit,OnChanges {
     console.log(this.profileService.profiles)
   }
 }
+
+/*
+7 july: 10k
+7 Aug:  25k  [15k: Puja, 10k rest]
+7 sept: 25k
+7 oct:  25k
+7 nov:  25k
+*/
+

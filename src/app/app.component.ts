@@ -9,13 +9,20 @@ export class AppComponent {
   ngOnInit(){
     console.log("App Component:  NG-ON-init called")
   }
-
   constructor() {
     console.log("App Component:  constructor called")
   }
+  //---------Code for assignments------------------
+
+
+
+
+  //---------Code for assignments------------------
+
   yourName = 'Avinash Kumar';
   title="";
   rootValue="My ROOT value from app component";
+
   serverElements=[
     {
       type:'server',

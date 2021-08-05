@@ -1,0 +1,22 @@
+
+<app-navbar (barSelected)="onNavigate($event)"></app-navbar>
+
+  <div class="row">
+<div class="col-lg-3" *ngIf="selectedTab==='home'">Home</div>
+  <div class="col-lg-3" *ngIf="selectedTab==='planes'">plane</div>
+  <div class="col-lg-3" *ngIf="selectedTab==='books'">Books</div>
+  </div>
+
+  <h3 basichighlight>Hi {{yourName}}, explore Angular features, highlight with own Custom Dierctive</h3>
+<!--Custom property binding exposing curr component value to lower level component,-->
+<app-profile [profValfromRoot]="rootValue"></app-profile>
+
+  <h1>Welcome to my Angular App: lets depp dive into it</h1>
+<router-outlet></router-outlet>
+<app-impl-directive></app-impl-directive>
+
+<app-server-elemen
+*ngFor="let serv of serverElements" [element]="serv">
+  </app-server-elemen>
+
+  <button class="btn-sm btn-default" (click)="changeRootVal()">Change Profile</button>

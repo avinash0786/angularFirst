@@ -1,18 +1,24 @@
 import {Component, ElementRef, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {EmailLogService} from "../services/email-log.service";
 
 @Component({
   selector: 'app-impl-directive',
   templateUrl: './impl-directive.component.html',
-  styleUrls: ['./impl-directive.component.css']
+  styleUrls: ['./impl-directive.component.css'],
+  providers:[EmailLogService]
 })
 export class ImplDirectiveComponent implements OnInit {
 
-  constructor() { }
+  constructor(private emailLog:EmailLogService) { }
 
   ngOnInit(): void {
   }
 
-  @ViewChild('sampleVal') sampleValue!:ElementRef
+  @ViewChild('sampleVal') sampleValue!:ElementRef;
+
+  changeVal(){
+    this.sampleValue.nativeElement.innerText="This is changed value"
+  }
 
   status=true;
   disableStatus(){
@@ -26,7 +32,11 @@ export class ImplDirectiveComponent implements OnInit {
   saveServerName(name:any){
     alert("Your serverName is : "+(name || "Not-Provided"))
   }
-  changeVal(){
-    this.sampleValue.nativeElement.innerText="This is changed value"
+
+  saveEmailLog(){
+
+  }
+  logAllEmails(){
+
   }
 }

@@ -10,16 +10,30 @@
     <ng-template #noStatus>
       <span class="text-danger">Current Status is Disabled</span>
     </ng-template>
+
   </h4>
   <p>Status: <span [ngStyle]="{'color':getColor()}"> {{status}}</span></p>
   <h4 class="text-info">Types of Server: </h4>
+
   <p *ngFor="let serv of servers" class="text-success">{{serv}}</p>
 
   <hr>
   <h3>Local refrence template</h3>
+
   <label for="smallInput">Give serverName: &nbsp; </label><input type="text" class="input-sm" id="smallInput" #servName>
   <button (click)="saveServerName(servName.value)">Save Server Name</button>
   <h3 #sampleVal>Local Template and DOM with @viewChild</h3>
   <button class="btn-info btn-sm" (click)="changeVal()">Change value</button>
+
+</div>
+
+<div class="container-fluid">
+  <h1>Email logging service checks:</h1>
+  <label for="toEmail" class="label-info">Email:</label>
+  <input type="text" class="input-sm" id="toEmail">
+  <label for="message" class="label-info">Message:</label>
+  <input type="text" class="input-sm" id="message">
+  <button type="button" class="btn btn-sm btn-info" (click)="saveEmailLog()">Send Email</button>
+  <button type="button" class="btn btn-sm btn-success" (click)="logAllEmails()">Log All Email</button>
 
 </div>

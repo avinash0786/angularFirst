@@ -1,0 +1,50 @@
+<div class="myContainer">
+  <div class="model">
+    <h3>Register user</h3>
+    <form class="row row-cols-sm-auto g-3 align-items-center">
+      <div class="col-6">
+        <div class="input-group">
+          <div class="input-group-text">First  Name</div>
+          <input type="text" [(ngModel)]="fname" class="form-control" name="fname" placeholder="First Name">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="input-group">
+          <div class="input-group-text">Last Name</div>
+          <input type="text" [(ngModel)]="lname" class="form-control" name="lname"  placeholder="Last Name">
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <div class="input-group">
+          <div class="input-group-text">User Name     </div>
+          <input type="text" [(ngModel)]="userName" (keyup)="checkUserAvl($event)" class="form-control" name="usr" id="inlineFormInputGroupUsername" placeholder="Choose a username">
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="input-group">
+          <div class="input-group-text">Your Email</div>
+          <input type="text" [(ngModel)]="email" class="form-control" name="email"  placeholder="Enter your email">
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="input-group">
+          <div class="input-group-text">Password</div>
+          <input type="password" [(ngModel)]="password" class="form-control" name="pswd" placeholder="Enter a strong password">
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <button type="button" (click)="registerUser()" [disabled]="disableRegister" class="btn btn-success"> Register User</button>
+        <p class="bg-light fs-5 text-muted" *ngIf="showMessage">
+          {{regProcessMessage}}  <span class="spinner-grow spinner-grow-sm text-danger" role="status" aria-hidden="true"></span>
+        </p>
+      </div>
+    </form>
+  </div>
+
+</div>
