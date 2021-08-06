@@ -1,4 +1,6 @@
 import {Component, SimpleChanges} from '@angular/core';
+import {DataService} from "./services/data.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -6,12 +8,24 @@ import {Component, SimpleChanges} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  ngOnInit(){
-    console.log("App Component:  NG-ON-init called")
-  }
-  constructor() {
+  constructor(private dataService:DataService,private router:Router) {
     console.log("App Component:  constructor called")
   }
+
+  ngOnInit(){
+    console.log("App Component:  NG-ON-init called")
+    console.log("User auth key: "+localStorage.getItem('auth'))
+
+    if (localStorage.getItem('auth')) {
+      this.dataService.isLogged = true;
+      this.router.navigate(['/profile'])
+    }
+    else {
+      this.dataService.isLogged = false;
+      this.router.navigate(['/login'])
+    }
+  }
+
   //---------Code for assignments------------------
 
 

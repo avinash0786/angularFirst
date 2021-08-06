@@ -35,7 +35,7 @@
           <div class="col-12">
             <div class="input-group">
               <div class="input-group-text">User Name     </div>
-              <input type="text" [(ngModel)]="userName" class="form-control" name="usrname" id="inlineFormInputGroupUsername" placeholder="Choose a username">
+              <input type="text" [(ngModel)]="userName" (keyup)="checkUserAvl($event)" class="form-control" name="usrname" id="inlineFormInputGroupUsername" placeholder="Choose a username">
             </div>
           </div>
 
@@ -55,15 +55,12 @@
 
 
           <div class="col-6">
-            <button type="button" class="btn btn-success" [ngClass]="{disabled:disbleRegister}">Update User</button>
+            <button type="button" class="btn btn-success" [ngClass]="{disabled:disableUpdate}" (click)="saveProfileData()">Update User</button>
           </div>
           <div class="col-6 fs-4" >
-            <div *ngIf="processingUsername">
-              <span class="spinner-grow spinner-grow-sm text-danger" role="status" aria-hidden="true"></span>
-              Checking UserName...
-            </div>
-            <small class="text-muted bg-light" *ngIf="!processingUsername && !userNameOK" >Username NOT available</small>
-            <small class="text-danger bg-info" *ngIf="userNameOK">Username OK</small>
+            <p class="bg-light fs-5 text-muted" *ngIf="showMessage">
+              {{logProcessMessage}}  <span class="spinner-grow spinner-grow-sm text-danger" role="status" aria-hidden="true"></span>
+            </p>
           </div>
         </form>
       </div>

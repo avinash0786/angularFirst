@@ -34,22 +34,25 @@ export class LoginComponent implements OnInit {
       pswd:this.password
     })
       .subscribe({
-        next:data=>{
+        next:(data:any)=>{
           console.log("data recieved REGISTER")
           console.log(data)
           //storing the jwt token
-          // @ts-ignore
           console.log(data.body.jwt)
-          // @ts-ignore
           this.dataService.JWT_TOKEN=data.body.jwt;
           this.logProcessMessage="User Logged in, Redirect profile :-)";
+          //setting the auth key in local storage
+
+          localStorage.setItem('auth',JSON.stringify(data.body.jwt))
+          this.dataService.userStatus.emit(true);
           this.router.navigate(['/profile'])
-          this.dataService.isLogged=true;
         },
         error:err => {
-          console.log(err)
           this.logProcessMessage='Error Logging user !'
           console.log('error occured in Logging in User')
+          console.log(err)
+          if (err.status===401 || err.status===404)
+            this.logProcessMessage='Authentication failed, try again !'
         }
       })
   }

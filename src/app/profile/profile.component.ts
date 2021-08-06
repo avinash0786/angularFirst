@@ -16,30 +16,29 @@ export class ProfileComponent implements OnInit,OnChanges {
     this.profileService.dataChange.subscribe((info:string)=>{
       alert('SUBS: dataChange: '+info)
     })
-
-    if (this.dataService.isLogged){
-      //if not logged then rediret to login
-      // this.router.navigate(['/login'])
-    }
-    else {
-      //get profile data
-      this.dataService.loadProfile()
-        .subscribe({
-          next: (data: any) => {
-            console.log("data recieved Profile")
-            console.log(data.body);
-            this.firstName = data.body.fname;
-            this.lastName = data.body.lname;
-            this.email = data.body.email;
-            this.userName = data.body.userName;
-            this.showMessage=false;
-          },
-          error: err => {
-            console.log(err)
-            console.log('error occured in Profile User')
+    //get profile data
+    this.dataService.loadProfile()
+      .subscribe({
+        next: (data: any) => {
+          console.log("data recieved Profile")
+          if (data.body.status==404){
+            router.navigate(['/login'])
+            return;
           }
-        })
-    }
+          console.log(data.body);
+          this.firstName = data.body.fname;
+          this.lastName = data.body.lname;
+          this.email = data.body.email;
+          this.userName = data.body.userName;
+          this.showMessage=false;
+        },
+        error: err => {
+          console.log(err)
+          console.log('error occured in Profile User');
+          localStorage.clear();
+          router.navigate(['/login'])
+        }
+      })
   }
 
   ngOnInit(): void {
@@ -47,15 +46,85 @@ export class ProfileComponent implements OnInit,OnChanges {
   //---------Code for assignments------------------
   showMessage:boolean=true;
   editProfile:boolean=false;
-  processingUsername:boolean=false;
-  userNameOK:boolean=true;
-  disbleRegister:boolean=!this.userNameOK && !this.processingUsername;
+  disableUpdate:boolean=false;
+  logProcessMessage:string="Update Profile Details"
 
   firstName:string="";
   lastName:string="";
   userName:string="";
   password:string="";
   email:string="";
+
+  saveProfileData(){
+    this.disableUpdate=true;
+    this.showMessage=true;
+    this.logProcessMessage="Updating Profile, wait ⌚";
+    console.log("Updating user data");
+    if (this.password===""){
+      this.logProcessMessage="Password blank 😠";
+      this.disableUpdate=false;
+      return;
+    }
+    console.log("Updating user start")
+    this.dataService.updateUser({
+      fname:this.firstName,
+      lname:this.lastName,
+      userName:this.userName,
+      email:this.email,
+      pswd:this.password
+    })
+      .subscribe({
+        next:(data:any)=>{
+          console.log("data recieved REGISTER")
+          console.log(data)
+          this.logProcessMessage="Profile Updated 😄";
+          this.disableUpdate=false;
+
+          localStorage.setItem('auth',JSON.stringify(data.body.jwt))
+          setTimeout(()=>{
+            this.showMessage=false;
+          },2000)
+        },
+        error:err => {
+          console.log(err)
+          this.logProcessMessage='Error Updating user 😔'
+          console.log('error occured in Regsitering User')
+        }
+      })
+  }
+
+  checkUserAvl(event:any){
+    this.showMessage=true;
+    this.logProcessMessage="Checking UserName";
+    console.log(event.target.value)
+    if (event.target.value==""){
+      this.showMessage=false;
+      return;
+    }
+    this.dataService.checkUserName(event.target.value)
+      .subscribe({
+        next:data=>{
+          console.log("data recieved CHECK user")
+          console.log(data)
+          // @ts-ignore
+          if (data.body.availableUser){
+            this.disableUpdate=false;
+            console.log('User available for use')
+            this.logProcessMessage="UserName Available 😄";
+          }
+          else {
+            this.disableUpdate=true;
+            console.log('User NOT available for use')
+            this.logProcessMessage="UserName NOT Available 😔";
+          }
+        },
+        error:err => {
+          console.log(err)
+          this.logProcessMessage='Error Checking user !'
+          console.log('error occured in checking User')
+        }
+      })
+  }
   //---------Code for assignments------------------
 
 

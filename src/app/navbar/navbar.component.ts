@@ -9,11 +9,15 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class NavbarComponent implements OnInit {
   constructor(private dataService:DataService,private router:Router) {
-    this.userLogged=this.dataService.isLogged;
+    this.dataService.userStatus.subscribe(
+      (status:boolean)=>{
+        this.userLogged=status;
+      }
+    )
   }
 
   ngOnInit(): void {
-
+    this.userLogged=this.dataService.isLogged;
   }
   //---------Code for assignments------------------
   userLogged:boolean=false;
@@ -28,6 +32,7 @@ export class NavbarComponent implements OnInit {
     this.barSelected.emit(feature);
   }
 
+
   logoutUser(){
     console.log("Logging OUT user")
     this.dataService.logoutUser()
@@ -36,8 +41,10 @@ export class NavbarComponent implements OnInit {
           console.log("Logged out user")
           console.log(data)
           this.router.navigate(['/login'])
+          localStorage.clear(); //deleting the user in local storage
           this.userLogged=false;
           this.dataService.isLogged=false;
+          this.dataService.userStatus.emit(false);
         },
         error:err => {
           console.log(err)

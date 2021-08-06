@@ -55,6 +55,7 @@ export class RegistrationComponent implements OnInit {
           console.log("data recieved REGISTER")
           console.log(data)
           this.regProcessMessage="Registered Successfully, Redirect login :-)";
+          this.router.navigate(['/login'])
         },
         error:err => {
           console.log(err)

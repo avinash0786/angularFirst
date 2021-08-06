@@ -7,7 +7,6 @@
     <div class="collapse navbar-collapse d-grid gap-2 d-md-flex justify-content-md-end" id="navbarNavAltMarkup">
       <div class="navbar-nav h4">
         <a class="nav-link" routerLinkActive="active" aria-current="page" href="#" *ngIf="!userLogged" routerLink="/register">Registration</a>
-        <a class="nav-link" routerLinkActive="active" href="#" *ngIf="userLogged" routerLink="/profile">Profile</a>
         <div class="">
           <a *ngIf="!userLogged" routerLinkActive="active" class="btn btn-outline-success  h4 me-md-2" type="submit" routerLink="/login">Login</a>
           <a *ngIf="userLogged" routerLinkActive="active" class="btn btn-outline-danger h4" type="submit" (click)="logoutUser()">Logout</a>
