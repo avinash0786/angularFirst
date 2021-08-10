@@ -11,12 +11,12 @@
           <p class="h3">{{firstName}} {{lastName}}</p>
           <p>{{email}}</p>
         </div>
-        <button class="btn btn-danger" *ngIf="!editProfile">Edit Profile</button>
+        <button class="btn btn-danger" (click)="editProfile=true">Edit Profile</button>
       </div>
     </div>
   </div>
   <div class="col-6">
-    <div class="myContainer" *ngIf="!editProfile">
+    <div class="myContainer" *ngIf="editProfile">
       <div class="model">
         <h3>Update user</h3>
         <form class="row row-cols-sm-auto g-3 align-items-center">

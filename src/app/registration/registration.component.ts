@@ -10,10 +10,7 @@ import {Router} from "@angular/router";
 export class RegistrationComponent implements OnInit {
 
   constructor(private dataService:DataService,private router:Router) {
-    if (this.dataService.isLogged){
-      //if not logged then rediret to login
-      this.router.navigate(['/profile'])
-    }
+
   }
 
   ngOnInit(): void {

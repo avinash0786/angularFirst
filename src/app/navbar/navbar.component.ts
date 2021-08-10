@@ -40,11 +40,11 @@ export class NavbarComponent implements OnInit {
         next:data=>{
           console.log("Logged out user")
           console.log(data)
-          this.router.navigate(['/login'])
           localStorage.clear(); //deleting the user in local storage
           this.userLogged=false;
           this.dataService.isLogged=false;
           this.dataService.userStatus.emit(false);
+          this.router.navigate(['/login'])
         },
         error:err => {
           console.log(err)

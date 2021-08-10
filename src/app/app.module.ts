@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {MatSliderModule} from "@angular/material/slider";
+import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { ImplDirectiveComponent } from './impl-directive/impl-directive.component';
 import { ServerElemenComponent } from './server-elemen/server-elemen.component';
@@ -11,14 +14,10 @@ import { NavbarComponent } from './navbar/navbar.component'
 import {HighlightDirective} from "./directives/highlight.directive";
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
-import {RouterModule, Routes} from "@angular/router";
-import {HttpClientModule} from "@angular/common/http";
+import { NgconceptComponent } from './ngconcept/ngconcept.component';
+import {AuthGuard} from "./services/auth-guard.service";
+import {CanDeactivateGuard} from "./profile/can-leave.service";
 
-const appRoutes:Routes=[
-  {path:'register', component:RegistrationComponent},
-  {path:'login', component:LoginComponent},
-  {path:'profile', component:ProfileComponent}
-]
 
 @NgModule({
   declarations: [
@@ -30,15 +29,18 @@ const appRoutes:Routes=[
     HighlightDirective,
     RegistrationComponent,
     LoginComponent,
+    NgconceptComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes),
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthGuard,CanDeactivateGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

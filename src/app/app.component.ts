@@ -1,6 +1,6 @@
 import {Component, SimpleChanges} from '@angular/core';
 import {DataService} from "./services/data.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterStateSnapshot} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -8,13 +8,14 @@ import {Router} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private dataService:DataService,private router:Router) {
+  constructor(private dataService:DataService,private router:Router,private actRoute:ActivatedRoute) {
     console.log("App Component:  constructor called")
   }
 
   ngOnInit(){
     console.log("App Component:  NG-ON-init called")
     console.log("User auth key: "+localStorage.getItem('auth'))
+    console.log(this.router.url)
 
     if (localStorage.getItem('auth')) {
       this.dataService.isLogged = true;

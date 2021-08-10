@@ -2,6 +2,8 @@ import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core'
 import {ProfileDataService} from "../services/profile-data.service";
 import {DataService} from "../services/data.service";
 import {Router} from "@angular/router";
+import {CanComponentDeactivate} from "./can-leave.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-profile',
@@ -11,8 +13,10 @@ import {Router} from "@angular/router";
   styleUrls: ['./profile.component.css'],
   providers:[]
 })
-export class ProfileComponent implements OnInit,OnChanges {
+export class ProfileComponent implements OnInit,OnChanges,CanComponentDeactivate {
   constructor(private dataService:DataService, private profileService:ProfileDataService,private router:Router) {
+    console.log("Profile comp:  "+this.router.url)
+
     this.profileService.dataChange.subscribe((info:string)=>{
       alert('SUBS: dataChange: '+info)
     })
@@ -46,6 +50,7 @@ export class ProfileComponent implements OnInit,OnChanges {
   //---------Code for assignments------------------
   showMessage:boolean=true;
   editProfile:boolean=false;
+  dataSaved:boolean=false;
   disableUpdate:boolean=false;
   logProcessMessage:string="Update Profile Details"
 
@@ -79,7 +84,7 @@ export class ProfileComponent implements OnInit,OnChanges {
           console.log(data)
           this.logProcessMessage="Profile Updated 😄";
           this.disableUpdate=false;
-
+          this.dataSaved=true;
           localStorage.setItem('auth',JSON.stringify(data.body.jwt))
           setTimeout(()=>{
             this.showMessage=false;
@@ -125,6 +130,14 @@ export class ProfileComponent implements OnInit,OnChanges {
         }
       })
   }
+
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.editProfile && !this.dataSaved )
+      return confirm("Do you want to discard changes?");
+    else {
+      return true;
+    }
+  }
   //---------Code for assignments------------------
 
 
@@ -164,6 +177,8 @@ export class ProfileComponent implements OnInit,OnChanges {
     this.profileService.profiles[index].name="Changed";
     console.log(this.profileService.profiles)
   }
+
+
 }
 
 /*

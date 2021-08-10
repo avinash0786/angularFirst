@@ -13,6 +13,7 @@ export class DataService {
   constructor(private http: HttpClient) {
     console.log("Data service initalized")
     this.ROOT_URL='http://localhost:3000/secure'
+
     console.log("User auth key: "+localStorage.getItem('auth'))
     if (localStorage.getItem('auth'))
       this.isLogged=true;

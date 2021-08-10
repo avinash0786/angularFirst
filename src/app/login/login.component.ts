@@ -11,9 +11,6 @@ export class LoginComponent implements OnInit {
 
   constructor(private dataService:DataService,private router:Router) {
     console.log("Auth :"+this.dataService.isLogged)
-    if (this.dataService.isLogged){
-      this.router.navigate(['/profile'])
-    }
   }
 
   ngOnInit(): void {
