@@ -18,6 +18,7 @@ import { NgconceptComponent } from './ngconcept/ngconcept.component';
 import {AuthGuard} from "./services/auth-guard.service";
 import {CanDeactivateGuard} from "./profile/can-leave.service";
 import {AuthInceptorService} from "./services/auth-inceptor.service";
+import { LearnformsComponent } from './learnforms/learnforms.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import {AuthInceptorService} from "./services/auth-inceptor.service";
     RegistrationComponent,
     LoginComponent,
     NgconceptComponent,
+    LearnformsComponent,
   ],
   imports: [
     BrowserModule,
